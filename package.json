@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "fetch-posts": "node scripts/notion-fetch.mjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

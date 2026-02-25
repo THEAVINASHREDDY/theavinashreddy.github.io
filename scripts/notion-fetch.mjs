@@ -1,7 +1,10 @@
 import fs from 'node:fs/promises';
+import { createWriteStream } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import { pipeline } from 'node:stream/promises';
 import { Client } from '@notionhq/client';
+import { randomUUID } from 'node:crypto';
 
 const args = new Set(process.argv.slice(2));
 const includeDrafts = args.has('--include-drafts');
@@ -18,6 +21,35 @@ if (!notionToken || !databaseId) {
 const notion = new Client({ auth: notionToken, notionVersion: '2025-09-03' });
 
 const outFile = path.resolve('src/data/posts.json');
+const imageDir = path.resolve('public/images/blog');
+
+/**
+ * Download a remote image to public/images/blog/ and return the local path.
+ * Returns the original URL unchanged if it's already a local/relative path
+ * or if the download fails.
+ */
+const downloadImage = async (url) => {
+  if (!url || !url.startsWith('http')) return url;
+
+  // Extract file extension from the URL path (before query params)
+  const urlPath = new URL(url).pathname;
+  const ext = path.extname(urlPath) || '.jpg';
+  const filename = `${randomUUID()}${ext}`;
+  const dest = path.join(imageDir, filename);
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    await fs.mkdir(imageDir, { recursive: true });
+    const fileStream = createWriteStream(dest);
+    await pipeline(res.body, fileStream);
+    // Return the public path (served by Vite from /public)
+    return `/images/blog/${filename}`;
+  } catch (err) {
+    console.error(`Failed to download image: ${err.message}`);
+    return url; // fallback to original URL
+  }
+};
 
 const richTextToPlain = (rich = []) => rich.map(rt => rt.plain_text || '').join('');
 
@@ -64,7 +96,7 @@ const fetchAllBlocks = async (blockId) => {
   return blocks;
 };
 
-const normalizeBlocks = (blocks) => {
+const normalizeBlocks = async (blocks) => {
   const normalized = [];
   for (const block of blocks) {
     const { type } = block;
@@ -96,7 +128,8 @@ const normalizeBlocks = (blocks) => {
     }
     if (type === 'image') {
       const img = block.image;
-      const url = img.type === 'external' ? img.external.url : img.file?.url;
+      const remoteUrl = img.type === 'external' ? img.external.url : img.file?.url;
+      const url = await downloadImage(remoteUrl);
       normalized.push({ type, url, caption: richTextToSegments(img.caption || []) });
       continue;
     }
@@ -167,10 +200,11 @@ const fetchPosts = async () => {
     const publishedAt = publishedAtProp?.date?.start || null;
     const excerpt = excerptProp?.rich_text ? richTextToPlain(excerptProp.rich_text) : '';
     const tags = tagsProp?.multi_select ? tagsProp.multi_select.map(t => t.name) : [];
-    const coverUrls = getCoverUrls(page, coverProp);
+    const remoteCoverUrls = getCoverUrls(page, coverProp);
+    const coverUrls = await Promise.all(remoteCoverUrls.map(downloadImage));
     const coverUrl = coverUrls[0] || null;
 
-    const blocks = normalizeBlocks(await fetchAllBlocks(page.id));
+    const blocks = await normalizeBlocks(await fetchAllBlocks(page.id));
     const plain = extractPlainFromBlocks(blocks);
     const readingTime = estimateReadingTime(plain);
 
