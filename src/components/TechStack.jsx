@@ -33,7 +33,7 @@ const elements = [
 
 const TechStack = () => {
     return (
-        <section className="py-24 bg-slate-900 relative overflow-hidden" id="skills">
+        <section className="py-24 bg-slate-900 relative overflow-hidden" id="skills" aria-labelledby="skills-heading">
             {/* Background Elements */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"></div>
 
@@ -44,7 +44,7 @@ const TechStack = () => {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-3xl md:text-5xl font-mono font-bold text-white mb-4">
+                    <h2 id="skills-heading" className="text-3xl md:text-5xl font-mono font-bold text-white mb-4">
                         <span className="text-cyan-500">Atomic</span> Skills
                     </h2>
                     <p className="text-slate-400 max-w-2xl mx-auto">
@@ -53,7 +53,7 @@ const TechStack = () => {
                 </motion.div>
 
                 {/* Periodic Table Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 max-w-6xl mx-auto">
+                <div role="list" className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 max-w-6xl mx-auto">
                     {elements.map((el, index) => {
                         const cat = categories.find(c => c.id === el.category);
                         return (
@@ -63,7 +63,9 @@ const TechStack = () => {
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: index * 0.05 }}
                                 whileHover={{ scale: 1.1, zIndex: 10 }}
-                                className={`aspect-square p-2 bg-slate-800/50 border ${cat.border} backdrop-blur-sm cursor-crosshair group flex flex-col justify-between hover:bg-slate-800 transition-colors`}
+                                role="listitem"
+                                aria-label={`${el.name} — ${cat.name}`}
+                                className={`aspect-square p-2 bg-slate-800/50 border ${cat.border} backdrop-blur-sm cursor-default group flex flex-col justify-between hover:bg-slate-800 transition-colors`}
                             >
                                 <div className="flex justify-between items-start">
                                     <span className="text-xs text-slate-500 font-mono">{el.number}</span>

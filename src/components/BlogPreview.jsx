@@ -7,18 +7,18 @@ const BlogPreview = ({ isLoading = false }) => {
   const latest = posts.slice(0, 3);
 
   return (
-    <section id="blog" className="py-24 bg-slate-900 relative">
+    <section id="blog" aria-labelledby="blog-heading" className="py-24 bg-slate-900 relative">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <div>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+            <h2 id="blog-heading" className="text-3xl md:text-5xl font-bold text-white mb-4">
               Signal <span className="text-cyan-500">Logs</span>
             </h2>
             <p className="text-slate-400 max-w-2xl">
               Short notes, deep dives, and engineering reflections from the lab.
             </p>
           </div>
-          <Link to="/blog" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-cyan-500/50 text-cyan-300 hover:bg-cyan-500/10 transition-all">
+          <Link to="/blog" className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-cyan-500/50 text-cyan-300 hover:bg-cyan-500/10 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900">
             View All Posts
           </Link>
         </div>
@@ -49,7 +49,8 @@ const BlogPreview = ({ isLoading = false }) => {
               <Link
                 key={post.id}
                 to={`/blog/${post.slug}`}
-                className="group bg-slate-800/40 border border-slate-700 rounded-2xl p-6 hover:bg-slate-800/70 transition-colors"
+                className="group bg-slate-800/40 border border-slate-700 rounded-2xl p-6 hover:bg-slate-800/70 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                aria-label={post.title}
               >
                 <div className="flex items-center gap-3 text-xs text-slate-500 font-mono mb-4">
                   <span>{post.publishedAt || 'Draft'}</span>

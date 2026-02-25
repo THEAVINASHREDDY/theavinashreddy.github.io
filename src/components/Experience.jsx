@@ -34,7 +34,7 @@ const Experience = () => {
     ];
 
     return (
-        <section id="experience" className="py-20 relative bg-slate-900">
+        <section id="experience" aria-labelledby="experience-heading" className="py-20 relative bg-slate-900">
             <div className="container mx-auto px-4">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -42,8 +42,8 @@ const Experience = () => {
                     viewport={{ once: true }}
                     className="mb-16"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center gap-3">
-                        <Briefcase className="text-cyan-400" />
+                    <h2 id="experience-heading" className="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center gap-3">
+                        <Briefcase className="text-cyan-400" aria-hidden="true" />
                         Professional Odyssey
                     </h2>
                     <div className="h-1 w-20 bg-cyan-500 rounded-full"></div>
@@ -68,7 +68,7 @@ const Experience = () => {
                                     <div className="text-lg text-cyan-400 font-mono">{exp.company}</div>
                                 </div>
                                 <div className="flex items-center gap-2 text-slate-400 font-mono text-sm mt-2 md:mt-0">
-                                    <Calendar className="w-4 h-4" />
+                                    <Calendar className="w-4 h-4" aria-hidden="true" />
                                     {exp.period} | {exp.location}
                                 </div>
                             </div>
@@ -80,7 +80,7 @@ const Experience = () => {
                             <ul className="space-y-3 mb-6">
                                 {exp.highlights.map((highlight, i) => (
                                     <li key={i} className="flex items-start gap-2 text-slate-400">
-                                        <ChevronRight className="w-5 h-5 text-cyan-500 shrink-0 mt-0.5" />
+                                        <ChevronRight className="w-5 h-5 text-cyan-500 shrink-0 mt-0.5" aria-hidden="true" />
                                         <span>{highlight}</span>
                                     </li>
                                 ))}

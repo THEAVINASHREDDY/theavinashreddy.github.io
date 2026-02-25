@@ -19,9 +19,9 @@ const BlogPost = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
+    <main className="min-h-screen bg-slate-900 text-white">
       <div className="container mx-auto px-4 py-12">
-        <Link to="/blog" className="text-cyan-300 hover:text-cyan-200 font-mono text-sm">← Back to Blog</Link>
+        <Link to="/blog" className="text-cyan-300 hover:text-cyan-200 font-mono text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:rounded">← Back to Blog</Link>
 
         <div className="mt-8">
           <div className="flex items-center gap-3 text-xs text-slate-500 font-mono mb-4">
@@ -47,7 +47,7 @@ const BlogPost = () => {
 
         {post.coverUrl ? (
           <div className="mt-10">
-            <img src={post.coverUrl} alt="" className="w-full rounded-2xl border border-slate-800" />
+            <img src={post.coverUrl} alt={`Cover image for ${post.title}`} className="w-full rounded-2xl border border-slate-800" />
           </div>
         ) : null}
 
@@ -68,7 +68,7 @@ const BlogPost = () => {
           {renderBlocks(post.blocks)}
         </article>
       </div>
-    </div>
+    </main>
   );
 };
 

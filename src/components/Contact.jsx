@@ -245,7 +245,7 @@ const Contact = ({ isLoading = false }) => {
   }
 
   return (
-    <section id="contact" className="py-24 bg-slate-900 relative">
+    <section id="contact" aria-labelledby="contact-heading" className="py-24 bg-slate-900 relative">
       <div className="container mx-auto px-4 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -253,7 +253,7 @@ const Contact = ({ isLoading = false }) => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+          <h2 id="contact-heading" className="text-3xl md:text-5xl font-bold text-white mb-6">
             Initialize <span className="text-cyan-500">Connection</span>
           </h2>
           <p className="text-slate-400 text-lg">
@@ -270,7 +270,7 @@ const Contact = ({ isLoading = false }) => {
           >
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-cyan-400">
-                <Mail className="w-6 h-6" />
+                <Mail className="w-6 h-6" aria-hidden="true" />
               </div>
               <div>
                 <div className="text-slate-500 text-sm font-mono">EMAIL</div>
@@ -282,7 +282,7 @@ const Contact = ({ isLoading = false }) => {
 
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-cyan-400">
-                <Linkedin className="w-6 h-6" />
+                <Linkedin className="w-6 h-6" aria-hidden="true" />
               </div>
               <div>
                 <div className="text-slate-500 text-sm font-mono">LINKEDIN</div>
@@ -294,7 +294,7 @@ const Contact = ({ isLoading = false }) => {
 
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-cyan-400">
-                <Github className="w-6 h-6" />
+                <Github className="w-6 h-6" aria-hidden="true" />
               </div>
               <div>
                 <div className="text-slate-500 text-sm font-mono">GITHUB</div>
@@ -319,7 +319,7 @@ const Contact = ({ isLoading = false }) => {
                   type="text"
                   value={form.name}
                   onChange={onChange('name')}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-colors"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus:border-cyan-500 transition-colors"
                   placeholder="Name"
                   autoComplete="name"
                   required
@@ -332,7 +332,7 @@ const Contact = ({ isLoading = false }) => {
                   type="email"
                   value={form.email}
                   onChange={onChange('email')}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-colors"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus:border-cyan-500 transition-colors"
                   placeholder="Email"
                   autoComplete="email"
                   required
@@ -344,7 +344,7 @@ const Contact = ({ isLoading = false }) => {
                   id="contact-message"
                   value={form.message}
                   onChange={onChange('message')}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-colors h-32 resize-none"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus:border-cyan-500 transition-colors h-32 resize-none"
                   placeholder="Message"
                   required
                 ></textarea>
@@ -369,16 +369,18 @@ const Contact = ({ isLoading = false }) => {
                 <p className="text-xs font-mono text-rose-400">{turnstileError}</p>
               ) : null}
 
-              {status.message ? (
-                <p className={`text-sm font-mono ${statusClass}`}>{status.message}</p>
-              ) : null}
+              <div aria-live="polite" aria-atomic="true">
+                {status.message ? (
+                  <p className={`text-sm font-mono ${statusClass}`} role={status.type === 'error' ? 'alert' : 'status'}>{status.message}</p>
+                ) : null}
+              </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-cyan-500 hover:bg-cyan-600 disabled:opacity-60 disabled:cursor-not-allowed text-slate-900 font-bold py-3 rounded-lg transition-all flex items-center justify-center gap-2"
+                className="w-full bg-cyan-500 hover:bg-cyan-600 disabled:opacity-60 disabled:cursor-not-allowed text-slate-900 font-bold py-3 rounded-lg transition-all flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
               >
-                <Send className="w-5 h-5" />
+                <Send className="w-5 h-5" aria-hidden="true" />
                 {isSubmitting ? 'Transmitting...' : 'Send Transmission'}
               </button>
             </form>

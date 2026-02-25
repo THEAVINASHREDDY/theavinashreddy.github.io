@@ -12,14 +12,14 @@ const BlogIndex = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
+    <main className="min-h-screen bg-slate-900 text-white">
       <div className="container mx-auto px-4 py-16">
         <div className="flex items-center justify-between mb-10">
           <div>
             <h1 className="text-3xl md:text-5xl font-bold">Signal Logs</h1>
             <p className="text-slate-400 mt-3">Deep dives, experiments, and lessons learned.</p>
           </div>
-          <Link to="/" className="text-cyan-300 hover:text-cyan-200 font-mono text-sm">Back to Home</Link>
+          <Link to="/" className="text-cyan-300 hover:text-cyan-200 font-mono text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:rounded">Back to Home</Link>
         </div>
 
         {isLoading ? (
@@ -50,10 +50,11 @@ const BlogIndex = () => {
               <Link
                 key={post.id}
                 to={`/blog/${post.slug}`}
-                className="group bg-slate-800/40 border border-slate-700 rounded-2xl overflow-hidden hover:bg-slate-800/70 transition-colors"
+                className="group bg-slate-800/40 border border-slate-700 rounded-2xl overflow-hidden hover:bg-slate-800/70 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                aria-label={post.title}
               >
                 {post.coverUrl ? (
-                  <img src={post.coverUrl} alt="" className="h-48 w-full object-cover" />
+                  <img src={post.coverUrl} alt={`Cover image for ${post.title}`} className="h-48 w-full object-cover" />
                 ) : (
                   <div className="h-48 w-full bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800"></div>
                 )}
@@ -85,7 +86,7 @@ const BlogIndex = () => {
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 };
 

@@ -3,7 +3,7 @@ import RetroGridBackground from './RetroGridBackground';
 
 const BootLoader = () => {
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950 overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-slate-950 overflow-hidden" role="status" aria-label="Loading site">
       <RetroGridBackground />
       <div className="absolute inset-0 bg-slate-900/45"></div>
 

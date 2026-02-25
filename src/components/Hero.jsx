@@ -6,7 +6,7 @@ import { ArrowDown } from 'lucide-react';
 
 const Hero = () => {
     return (
-        <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        <section aria-label="Introduction" className="relative h-screen w-full flex items-center justify-center overflow-hidden">
             <RetroGridBackground />
 
             <div className="z-10 text-center px-4">
@@ -46,14 +46,14 @@ const Hero = () => {
                 >
                     <a
                         href="#experience"
-                        className="inline-flex items-center gap-2 px-8 py-3 border border-cyan-500/50 rounded-full text-cyan-400 hover:bg-cyan-500/10 transition-all group"
+                        className="inline-flex items-center gap-2 px-8 py-3 border border-cyan-500/50 rounded-full text-cyan-400 hover:bg-cyan-500/10 transition-all group focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
                     >
                         View Experience
-                        <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
+                        <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" aria-hidden="true" />
                     </a>
                     <Link
                         to="/blog"
-                        className="inline-flex items-center gap-2 px-8 py-3 border border-slate-700 rounded-full text-slate-200 hover:border-cyan-500/50 hover:text-cyan-300 transition-all"
+                        className="inline-flex items-center gap-2 px-8 py-3 border border-slate-700 rounded-full text-slate-200 hover:border-cyan-500/50 hover:text-cyan-300 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
                     >
                         Read the Blog
                     </Link>

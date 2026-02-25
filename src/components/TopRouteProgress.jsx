@@ -2,7 +2,7 @@ import React from 'react';
 
 const TopRouteProgress = ({ active }) => {
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+    <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none" role="progressbar" aria-hidden={!active} aria-label="Page loading">
       <div className={`route-progress-track ${active ? 'is-active' : ''}`}>
         <div className="route-progress-bar"></div>
       </div>
