@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { resolve } from 'node:path'
+import { copyFile } from 'node:fs/promises'
 
 /**
  * Strips unpublished (draft) posts from posts.json at build time so they
@@ -24,7 +26,21 @@ function stripDraftPosts() {
   };
 }
 
+/**
+ * Copies index.html to 404.html after build so GitHub Pages serves the SPA
+ * for unknown routes, allowing React Router to handle them client-side.
+ */
+function ghPages404() {
+  return {
+    name: 'gh-pages-404',
+    closeBundle: async () => {
+      const outDir = resolve('dist');
+      await copyFile(resolve(outDir, 'index.html'), resolve(outDir, '404.html'));
+    }
+  };
+}
+
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [stripDraftPosts(), react()],
+  plugins: [stripDraftPosts(), react(), ghPages404()],
 })
